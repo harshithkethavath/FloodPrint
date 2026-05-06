@@ -1,0 +1,46 @@
+# ─────────────────────────────────────────────
+# Flash Flood Warning Verification Project
+# Spatiotemporal Verification of NWS Flash Flood Warnings
+# ─────────────────────────────────────────────
+
+# ── HRRR Data Access ──────────────────────────
+herbie-data
+
+# ── GRIB2 / NetCDF Reading ────────────────────
+xarray
+cfgrib
+eccodes
+rioxarray
+netCDF4
+
+# ── Geospatial / Vector ───────────────────────
+geopandas
+shapely
+pyproj
+fiona
+regionmask
+
+# ── Data Manipulation ─────────────────────────
+pandas
+numpy
+pyarrow
+
+# ── Machine Learning ──────────────────────────
+scikit-learn
+xgboost
+shap
+
+# ── Geographically Weighted Regression ────────
+mgwr
+
+# ── Visualization ─────────────────────────────
+matplotlib
+cartopy
+seaborn
+
+# ── Networking / API ──────────────────────────
+requests
+
+# ── HPC / Parallelism ─────────────────────────
+joblib
+tqdm
