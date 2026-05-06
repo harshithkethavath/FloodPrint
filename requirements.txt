@@ -23,6 +23,7 @@ regionmask
 # ── Data Manipulation ─────────────────────────
 pandas
 numpy
+fastparquet
 pyarrow
 
 # ── Machine Learning ──────────────────────────
