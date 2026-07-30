@@ -53,22 +53,6 @@ Centroids are computed in EPSG:5070 (Albers Equal Area) and reprojected back to 
 ### Hurricane Helene case study (`Herbie_Helene.ipynb`, `HRRR.ipynb`)
 For selected Helene warnings (Sep 26–30, 2024), downloads HRRR `f01` fields (precipitable water, CAPE, composite reflectivity) via [Herbie](https://herbie.readthedocs.io/) and plots them alongside the warning polygon and the LSRs that fell inside it — a qualitative look at how environmental fields related to verification for one high-impact event.
 
-## Data
-
-| Dataset | Description |
-| --- | --- |
-| `lsr_clean_ws2024.parquet` | QC'd Flash Flood LSRs, CONUS, Apr–Sep 2024 |
-| `ffw_polygons_ws2024.parquet` | QC'd FFW warning polygons with `WARNING_ID` |
-| `ffw_labeled_ws2024.parquet` | Warnings joined to LSRs with `verified`, `false_alarm_fraction`, `n_lsr_inside`, `first_lsr_minutes`, centroid coordinates, and month/hour fields |
-
-The cleaned and labeled datasets are published on Hugging Face in the **[FloodPrint collection](https://huggingface.co/collections/harshithkethavath/floodprint)** (CC BY 4.0):
-
-- [`FloodPrint-LSR-WS2024`](https://huggingface.co/datasets/harshithkethavath/FloodPrint-LSR-WS2024) — cleaned Flash Flood LSRs
-- [`FloodPrint-FFW-Polygons-WS2024`](https://huggingface.co/datasets/harshithkethavath/FloodPrint-FFW-Polygons-WS2024) — QC'd FFW warning polygons
-- [`FloodPrint-FFW-Labeled-WS2024`](https://huggingface.co/datasets/harshithkethavath/FloodPrint-FFW-Labeled-WS2024) — warnings labeled with verification and false-alarm metrics
-
-**Sources:** [Iowa Environmental Mesonet](https://mesonet.agron.iastate.edu/) (LSRs and warning polygons) and NOAA's HRRR archive on AWS S3 via Herbie.
-
 ## Figures
 
 | File | What it shows |
@@ -95,27 +79,3 @@ pip install -r requirements.txt
 `cfgrib`/`eccodes` and `cartopy` have system-level dependencies; installing them via conda/conda-forge is often the smoothest path on macOS and Linux.
 
 Run the notebooks in order — `LSRs.ipynb` → `Warnings.ipynb` → `Join.ipynb` — to regenerate the datasets from scratch, then `Herbie_Helene.ipynb` for the case study. Each notebook reads from and writes to a local `data/` directory (created on first run, git-ignored).
-
-## Method notes & reproducibility caveats
-
-A few decisions materially affect the results and are worth flagging for anyone reusing this work:
-
-- **Verification is observation-limited.** An "unverified" warning means no qualifying LSR was found — not that no flash flood occurred. In low-spotter-density regions this systematically depresses the verification rate. Treat regional comparisons accordingly.
-- **The 60-minute grace period and 5 km buffer are tunable.** Both were chosen as reasonable defaults consistent with the spatial/temporal uncertainty of LSRs; widening or narrowing them shifts the verification rate.
-- **IEM type/WFO filters are unreliable**, so the pipeline fetches all records and filters in Python.
-- **GRIB longitudes** from HRRR are stored in 0–360 format and require conversion to ±180 before plotting.
-- Equal-area operations (areas, buffers, centroids) use **EPSG:5070**; lat/lon is restored only for display.
-
-## Citation
-
-If you use the data or methodology, please cite:
-
-```bibtex
-@misc{floodprint2026,
-  title     = {FloodPrint: Spatiotemporal verification of NWS Flash Flood Warnings across CONUS for the 2024 warm season},
-  author    = {Harshith Kethavath},
-  year      = {2026},
-  publisher = {GitHub},
-  url       = {https://github.com/harshithkethavath/FloodPrint}
-}
-```
