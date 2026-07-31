@@ -29,8 +29,6 @@ FloodPrint/
 └── README.md
 ```
 
-> **Data files are not committed.** Raw and processed `.parquet`/`.csv`/GRIB2 files are excluded via `.gitignore`. The notebooks regenerate them from the IEM API and NOAA's HRRR archive. The cleaned datasets are also published on Hugging Face — see [Data](#data).
-
 ## Pipeline
 
 The study runs as a sequence of self-contained notebooks. Each reads from and writes to a local `data/` directory consumed by the next.
